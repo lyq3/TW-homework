@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+<blockquote class="layui-elem-quote">
+    可上传txt文本文件或者直接在输入框输入内容提交即可：
+</blockquote>
+<button style="margin-left: 50px"  type="button" class="layui-btn" id="test1">
+    <i class="layui-icon">&#xe67c;</i>上传文件
+</button>
+<hr class="layui-bg-red">
+<form class="layui-form" >
+    <label class="layui-form-label">请输入内容</label>
+    <div class="layui-form-item layui-form-text">
+
+        <div class="layui-input-block">
+            <textarea id="in" name="in" rows="12" placeholder="请输入内容" class="layui-textarea"></textarea>
+        </div>
+    </div>
+</form>
+<div class="layui-form-item">
+    <div class="layui-input-block">
+        <button class="layui-btn" lay-submit lay-filter="formDemo" onclick="submitFuc()">立即提交</button>
+        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+</div>
+
+<blockquote id = res class="layui-elem-quote layui-quote-nm"></blockquote>
+
+<script src="../layui/layui.js"></script>
+
+<script>
+    var $;
+    //Demo
+    layui.use(['form','jquery','upload'], function(){
+        var form = layui.form;
+        $ = layui.jquery;
+        var upload = layui.upload;
+
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#test1' //绑定元素
+            ,url: '/file' //上传接口
+            ,accept: 'file'
+            ,done: function(res){
+                //上传完毕回调
+                if (res.code == 1){
+                    $("#res").html(res.data);
+                } else {
+                    layer.alert(res.msg);
+                }
+
+            }
+            ,error: function(){
+                //请求异常回调
+            }
+        });
+    });
+
+    function submitFuc() {
+        var data = $("#in").val();
+        $.ajax({
+            url : "/conver",
+            type : "post",
+            data : {"in":data},
+            dataType : "json",
+            error : function(){
+                layer.msg("服务器繁忙")
+            },
+            success : function (res) {
+                if(res.code == 1){
+                    $("#res").html(res.data)
+                } else {
+                    layer.alert(res.msg);
+                }
+
+            }
+        })
+    }
+</script>
+
+</body>
+</html>
