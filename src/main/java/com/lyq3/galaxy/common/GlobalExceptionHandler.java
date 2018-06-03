@@ -3,12 +3,9 @@ package com.lyq3.galaxy.common;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.NoHandlerFoundException;
 
 /**
  * 全局的权限验证和异常拦截
@@ -29,16 +26,6 @@ public class GlobalExceptionHandler {
         Result<String> res = new Result<String>();
         res.setCode(e.getCode()).setMsg(e.getMsg());
         return res;
-    }
-
-    /**
-     * 404异常
-     * @param e
-     * @return
-     */
-    @ExceptionHandler(NoHandlerFoundException.class)
-    public  String notFoundException(NoHandlerFoundException e){
-        return "redirect:/index.html";
     }
     /**
      * 其他未知异常
