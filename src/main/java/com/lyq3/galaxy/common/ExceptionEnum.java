@@ -9,7 +9,8 @@ public enum ExceptionEnum {
     ROMAN_ILLEGAL(2,"非法的罗马数字"),
     NOT_NULL(3,"输入不能为空"),
     FILE_FORMAT_ERROR(4,"文件格式错误,只支持txt"),
-    FILE_READ_ERROR(5,"文件读取错误")
+    FILE_READ_ERROR(5,"文件读取错误"),
+    CONVERT_ERROR(6,"转换器异常")
     ;
 
     private int code;

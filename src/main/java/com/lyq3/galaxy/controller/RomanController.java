@@ -6,12 +6,11 @@ import com.lyq3.galaxy.common.Result;
 import com.lyq3.galaxy.service.RomanService;
 import com.lyq3.galaxy.util.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
@@ -43,7 +42,7 @@ public class RomanController {
      * @return
      */
     @PostMapping("/file")
-    public Result<String> file(MultipartFile file) throws IOException {
+    public Result<String> file(MultipartFile file, HttpServletRequest request) throws IOException {
         String fileName = file.getOriginalFilename();
         String fileType =fileName .substring(fileName.lastIndexOf(".")+1);
         if (!"txt".equals(fileType)){

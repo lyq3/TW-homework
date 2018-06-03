@@ -1,9 +1,15 @@
 package com.lyq3.galaxy.service.impl;
 
 import com.lyq3.galaxy.common.LineEnum;
+import com.lyq3.galaxy.common.RomanEnum;
+import com.lyq3.galaxy.common.Tem;
+import com.lyq3.galaxy.factory.ConverterFactory;
 import com.lyq3.galaxy.service.RomanService;
 import com.lyq3.galaxy.util.LineUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -16,27 +22,19 @@ public class RomanServiceImpl implements RomanService {
 
     @Override
     public String converter(String in) {
-        LineUtils.init();
+        /**用于存放中间处理结果*/
+        Tem tem = new Tem();
+        /**输出结果*/
         String res = "";
         String[] strArray = in.split("\n|/n");
         //将拆分的行存入统一收集类中
-        LineUtils.getTem().setLineArray(strArray);
+        tem.setLineArray(strArray);
         //遍历行
         for(String line : strArray){
+            //判断语句类型
             LineEnum lineType = LineUtils.getLineType(line.trim());
-
-            switch (lineType) {
-                case CONDITION: LineUtils.convertCondition(line);
-                break;
-                case SPECULATION:LineUtils.convertCredits(line);
-                break;
-                case HOWMANY:res += LineUtils.howMany(line);
-                break;
-                case HOWMUCH: res += LineUtils.howMuch(line);
-                break;
-                case ERROR:res += "I have no idea what you are talking about</br>";
-                break;
-            }
+            //创建对应的转换器处理并返回结果
+           res += ConverterFactory.build(lineType).convert(line,tem);
 
         }
         return res;

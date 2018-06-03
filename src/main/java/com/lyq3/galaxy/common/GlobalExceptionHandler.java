@@ -46,6 +46,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Result<String> bussinessException(Exception e) {
+        e.printStackTrace();
         // 输出JSON
         Result<String> res = new Result<String>();
         res.setCode(999).setMsg("未知异常，请检查文本格式");
